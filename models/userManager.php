@@ -6,18 +6,18 @@ include_once('utils/helper.php');
 
 class UserManager
 {
+    private $bdMan;
 
     public function __construct()
     {
-
+        $this->bdMan = new BdManager();
     }
 
     public function getAllUsers()
     {
         $sql = "select * from ".Constants::$TABLE_PREFIX."users ";
-        $bdMan = new BdManager();
         $entetes = array("id","fullname","login","password","email","profile");
-        $res = $bdMan->executeSelect($sql,$entetes);
+        $res = $this->bdMan->executeSelect($sql,$entetes);
         $users = array();
 
         for ($i = 0 ; $i < count($res) ; $i++)
@@ -45,9 +45,8 @@ class UserManager
           "login" => $login,
           "password" => $pwd
         );
-        $bdMan = new BdManager();
         $entetes = array("id","fullname","login","password","email","profile");
-        $res = $bdMan->executePreparedSelect($sql, $dicoParam, $entetes);
+        $res = $this->bdMan->executePreparedSelect($sql, $dicoParam, $entetes);
         if (count($res) > 0){
             $resultat["code"] = Constants::$SUCCES_CODE;
             $resultat["message"] = "";
@@ -62,9 +61,8 @@ class UserManager
         $dicoParam = array(
             "idUser" => $idUser
         );
-        $bdMan = new BdManager();
         $entetes = array("id","fullname","login","password","email","profile");
-        $res = $bdMan->executePreparedSelect($sql, $dicoParam, $entetes);
+        $res = $this->bdMan->executePreparedSelect($sql, $dicoParam, $entetes);
         $_user = null;
         if (count($res) > 0)
         {
@@ -91,8 +89,7 @@ class UserManager
             "profile" => $newUser->profile,
             "id" => $id
         );
-        $bdMan = new BdManager();
-        $bdMan->executePreparedQuery($sql, $dicoParam);
+        $this->bdMan->executePreparedQuery($sql, $dicoParam);
         $resultat["code"] = Constants::$SUCCES_CODE;
         return $resultat;
     }
@@ -108,8 +105,7 @@ class UserManager
             "email" => $newUser->email,
             "profile" => $newUser->profile
         );
-        $bdMan = new BdManager();
-        $bdMan->executePreparedQuery($sql, $dicoParam);
+        $this->bdMan->executePreparedQuery($sql, $dicoParam);
         $resultat["code"] = Constants::$SUCCES_CODE;
         return $resultat;
     }
@@ -119,8 +115,7 @@ class UserManager
         $dicoParam = array(
             "idUser" => $id
         );
-        $bdMan = new BdManager();
-        $bdMan->executePreparedQuery($sql, $dicoParam);
+        $this->bdMan->executePreparedQuery($sql, $dicoParam);
         $resultat["code"] = Constants::$SUCCES_CODE;
         return $resultat;
     }
