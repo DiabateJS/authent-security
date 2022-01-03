@@ -28,5 +28,10 @@ class User
         $this->profile = $profile;
     }
 
+    public function isEmpty(){
+        return $this->id == "" && $this->fullname == "" && $this->login == "" && $this->password == ""
+               && $this->email == "" && $this->profile == "";
+    }
+
 }
 ?>

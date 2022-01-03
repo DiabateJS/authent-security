@@ -5,8 +5,10 @@ class Constants {
 
     // PROD or LOCAL
     public static $ENV = "LOCAL";
+    //public static $ENV = "PROD";
     //Vide en local - Prefixe suivi de _ en Prod
     public static $TABLE_PREFIX = "";
+    //public static $TABLE_PREFIX = "au_";
 
     public static $SUCCES_CODE = "SUCCES";
     public static $WARNING_CODE = "WARNING";

@@ -9,22 +9,20 @@
   $detail = isset($_GET["detail"]) ? strtolower($_GET["detail"]) : "";
 
   $data = json_decode(file_get_contents("php://input"));
+  $userManager = new UserManager();
 
   if ($method == "get"){
       if ($detail == "users"){
-          $userManager = new UserManager();
           echo json_encode($userManager->getAllUsers());
       }
       if ($detail == "user"){
           $id = isset($_GET["id"]) ? $_GET["id"] : "";
-          $userManager = new UserManager();
           echo json_encode($userManager->getUserById($id));
       }
   }
   if ($method == "auth"){
       $login = isset($_POST["login"]) ? $_POST["login"] : $data->login;
       $pwd = isset($_POST["password"]) ? $_POST["password"] : $data->password;
-      $userManager = new UserManager();
       echo json_encode($userManager->isAuth($login, $pwd));
   }
     if ($method == "put"){
@@ -36,7 +34,6 @@
             $email = $data->email ?? "";
             $profile = $data->profile ?? "";
             $newUser = new User($id, $fullname, $login, $password, $email, $profile);
-            $userManager = new UserManager();
             echo json_encode($userManager->updateUser($id, $newUser));
         }
     }
@@ -49,14 +46,13 @@
             $email = $data->email ?? "";
             $profile = $data->profile ?? "";
             $newUser = new User($id, $fullname, $login, $password, $email, $profile);
-            $userManager = new UserManager();
-            echo json_encode($userManager->createUser($newUser));
+            echo json_encode($newUser->isEmpty() ? Helper::createResponseObject() : 
+                                                   $userManager->createUser($newUser));
         }
     }
     if ($method == "delete"){
         if ($detail == "user"){
             $id = isset($_GET["id"]) ? $_GET["id"] : "";
-            $userManager = new UserManager();
             echo json_encode($userManager->deleteUser($id));
         }
     }

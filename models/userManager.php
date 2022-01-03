@@ -79,7 +79,7 @@ class UserManager
 
     public function updateUser($id, $newUser)
     {
-        $resultat = Helper::createResponseObject();;
+        $resultat = Helper::createResponseObject();
         $sql = "update ".Constants::$TABLE_PREFIX."users set fullname = :fullname , login = :login , password = :password , email = :email , profile = :profile where id = :id";
         $dicoParam = array(
             "fullname" => $newUser->fullname,
@@ -96,7 +96,7 @@ class UserManager
 
     public function createUser($newUser)
     {
-        $resultat = Helper::createResponseObject();;
+        $resultat = Helper::createResponseObject();
         $sql = "insert into ".Constants::$TABLE_PREFIX."users (fullname, login, password, email, profile) values (:fullname, :login, :password, :email, :profile)";
         $dicoParam = array(
             "fullname" => $newUser->fullname,
@@ -111,6 +111,7 @@ class UserManager
     }
 
     public function deleteUser($id){
+        $resultat = Helper::createResponseObject();
         $sql = "delete from ".Constants::$TABLE_PREFIX."users where id = :idUser";
         $dicoParam = array(
             "idUser" => $id
